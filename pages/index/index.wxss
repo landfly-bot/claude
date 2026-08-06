@@ -1,0 +1,263 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8rpx 8rpx 24rpx;
+}
+
+.date {
+  font-size: 36rpx;
+  font-weight: 600;
+}
+
+.weekday {
+  font-size: 26rpx;
+  color: var(--text-weak);
+  margin-left: 12rpx;
+}
+
+.next {
+  font-size: 24rpx;
+  color: var(--brand);
+  background: rgba(47, 128, 237, 0.1);
+  padding: 8rpx 18rpx;
+  border-radius: 999rpx;
+  max-width: 380rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* ---------- 水杯 ---------- */
+.cup-card {
+  background: #fff;
+  border-radius: 28rpx;
+  padding: 44rpx 0 32rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 8rpx 24rpx rgba(47, 128, 237, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cup {
+  position: relative;
+  width: 340rpx;
+  height: 400rpx;
+  border: 8rpx solid rgba(47, 128, 237, 0.25);
+  border-top-left-radius: 40rpx;
+  border-top-right-radius: 40rpx;
+  border-bottom-left-radius: 120rpx;
+  border-bottom-right-radius: 120rpx;
+  overflow: hidden;
+  background: rgba(47, 128, 237, 0.04);
+}
+
+.water {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(180deg, var(--brand-light) 0%, var(--brand) 100%);
+  transition: height 0.7s cubic-bezier(0.25, 0.8, 0.35, 1);
+}
+
+.wave {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 520rpx;
+  height: 520rpx;
+  margin-left: -260rpx;
+  margin-top: -505rpx;
+  background: rgba(86, 204, 242, 0.85);
+  border-radius: 43%;
+  animation: wave-spin 7s linear infinite;
+}
+
+.wave-2 {
+  background: rgba(47, 128, 237, 0.5);
+  border-radius: 47%;
+  margin-top: -500rpx;
+  animation: wave-spin 11s linear infinite reverse;
+}
+
+@keyframes wave-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.cup-info {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  z-index: 2;
+}
+
+.amount-line {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+}
+
+.amount {
+  font-size: 76rpx;
+  font-weight: 700;
+  color: var(--text);
+  text-shadow: 0 2rpx 8rpx rgba(255, 255, 255, 0.7);
+}
+
+.unit {
+  font-size: 28rpx;
+  margin-left: 8rpx;
+  color: var(--text);
+  text-shadow: 0 2rpx 8rpx rgba(255, 255, 255, 0.7);
+}
+
+.goal-line {
+  display: block;
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  color: #46536b;
+  text-shadow: 0 2rpx 8rpx rgba(255, 255, 255, 0.7);
+}
+
+.remaining {
+  margin-top: 28rpx;
+  font-size: 26rpx;
+  color: var(--text-weak);
+}
+
+.remaining.done {
+  color: var(--brand);
+}
+
+/* ---------- 快速记录 ---------- */
+.cups {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cup-btn {
+  width: 152rpx;
+  height: 130rpx;
+  margin: 0 14rpx 16rpx 0;
+  border-radius: 20rpx;
+  background: rgba(47, 128, 237, 0.07);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.cup-btn:active {
+  background: rgba(47, 128, 237, 0.18);
+}
+
+.cup-btn.custom {
+  background: rgba(138, 148, 166, 0.1);
+}
+
+.cup-icon {
+  font-size: 40rpx;
+}
+
+.cup-amount {
+  font-size: 24rpx;
+  margin-top: 10rpx;
+  color: var(--text);
+}
+
+/* ---------- 今日记录 ---------- */
+.record {
+  display: flex;
+  align-items: center;
+  padding: 22rpx 0;
+  border-top: 1rpx solid #f0f2f5;
+  font-size: 28rpx;
+}
+
+.record-time {
+  width: 120rpx;
+  color: var(--text-weak);
+  font-size: 26rpx;
+}
+
+.record-amount {
+  flex: 1;
+  font-weight: 500;
+}
+
+.record-del {
+  font-size: 24rpx;
+  color: #eb5757;
+  padding: 6rpx 16rpx;
+}
+
+.tips {
+  display: block;
+  margin-top: 16rpx;
+  text-align: center;
+}
+
+/* ---------- 自定义弹窗 ---------- */
+.mask {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 10;
+}
+
+.dialog {
+  position: fixed;
+  left: 60rpx;
+  right: 60rpx;
+  top: 34%;
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 40rpx 36rpx 20rpx;
+  z-index: 11;
+}
+
+.dialog-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  text-align: center;
+}
+
+.dialog-input {
+  margin: 32rpx 0 24rpx;
+  height: 88rpx;
+  background: #f4f6f9;
+  border-radius: 16rpx;
+  padding: 0 24rpx;
+  font-size: 30rpx;
+}
+
+.dialog-actions {
+  display: flex;
+  border-top: 1rpx solid #f0f2f5;
+}
+
+.dialog-btn {
+  flex: 1;
+  text-align: center;
+  padding: 26rpx 0;
+  font-size: 30rpx;
+  color: var(--text-weak);
+}
+
+.dialog-btn.primary {
+  color: var(--brand);
+  font-weight: 600;
+}

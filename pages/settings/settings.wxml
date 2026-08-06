@@ -1,0 +1,99 @@
+<view class="page" wx:if="{{settings}}">
+  <view class="card">
+    <view class="row">
+      <text class="card-title" style="margin-bottom: 0;">每日目标</text>
+      <text class="value">{{settings.goal}} mL</text>
+    </view>
+    <slider
+      class="slider"
+      min="500"
+      max="5000"
+      step="100"
+      value="{{settings.goal}}"
+      activeColor="#2f80ed"
+      block-size="22"
+      bindchange="onGoalChange"
+    />
+    <view class="presets">
+      <view class="preset" data-goal="1500" bindtap="onGoalPreset">1500</view>
+      <view class="preset" data-goal="2000" bindtap="onGoalPreset">2000</view>
+      <view class="preset" data-goal="2500" bindtap="onGoalPreset">2500</view>
+      <view class="preset" data-goal="3000" bindtap="onGoalPreset">3000</view>
+    </view>
+    <text class="muted">一般建议每天 1500 - 2500 mL，运动量大或天气炎热可适当增加。</text>
+  </view>
+
+  <view class="card">
+    <view class="card-title">快捷杯量 (mL)</view>
+    <view class="cup-inputs">
+      <input
+        class="cup-input"
+        wx:for="{{settings.cups}}"
+        wx:key="index"
+        type="number"
+        value="{{item}}"
+        data-index="{{index}}"
+        bindblur="onCupInput"
+      />
+    </view>
+    <text class="muted">首页「快速记录」按钮的水量，修改后立即生效。</text>
+  </view>
+
+  <view class="card">
+    <view class="card-title">提醒</view>
+
+    <view class="item">
+      <text class="item-label">开启提醒</text>
+      <switch checked="{{settings.remindEnabled}}" color="#2f80ed" bindchange="onRemindToggle" />
+    </view>
+
+    <picker mode="time" value="{{settings.startTime}}" bindchange="onStartTimeChange">
+      <view class="item">
+        <text class="item-label">开始时间</text>
+        <text class="value">{{settings.startTime}} ›</text>
+      </view>
+    </picker>
+
+    <picker mode="time" value="{{settings.endTime}}" bindchange="onEndTimeChange">
+      <view class="item">
+        <text class="item-label">结束时间</text>
+        <text class="value">{{settings.endTime}} ›</text>
+      </view>
+    </picker>
+
+    <picker mode="selector" range="{{intervalOptions}}" value="{{intervalIndex}}" bindchange="onIntervalChange">
+      <view class="item">
+        <text class="item-label">提醒间隔</text>
+        <text class="value">{{intervalOptions[intervalIndex]}} ›</text>
+      </view>
+    </picker>
+
+    <view class="item">
+      <text class="item-label">提醒时震动</text>
+      <switch checked="{{settings.vibrate}}" color="#2f80ed" bindchange="onVibrateToggle" />
+    </view>
+
+    <view class="item last">
+      <text class="item-label">下次提醒</text>
+      <text class="muted">{{nextText}}</text>
+    </view>
+
+    <view class="action" bindtap="onSubscribe">开启微信推送提醒</view>
+    <text class="muted">小程序退到后台后定时器会暂停，授权订阅消息后才能在关闭小程序时收到提醒。</text>
+  </view>
+
+  <view class="card">
+    <view class="card-title">数据</view>
+    <view class="item" bindtap="onResetSettings">
+      <text class="item-label">恢复默认设置</text>
+      <text class="value">›</text>
+    </view>
+    <view class="item last" bindtap="onClearRecords">
+      <text class="item-label danger">清空饮水记录</text>
+      <text class="value">›</text>
+    </view>
+    <text class="muted">所有数据仅保存在本机，不会上传。</text>
+  </view>
+
+  <view class="footer">喝水提醒 v{{version}}</view>
+</view>

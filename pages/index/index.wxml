@@ -1,0 +1,86 @@
+<view class="page">
+  <view class="header">
+    <view>
+      <text class="date">{{dateLabel}}</text>
+      <text class="weekday">{{weekday}}</text>
+    </view>
+    <text class="next" bindtap="goSettings">{{nextText}}</text>
+  </view>
+
+  <view class="cup-card">
+    <view class="cup">
+      <view class="water" style="height: {{percent}}%;">
+        <view class="wave"></view>
+        <view class="wave wave-2"></view>
+      </view>
+      <view class="cup-info">
+        <view class="amount-line">
+          <text class="amount">{{total}}</text>
+          <text class="unit">mL</text>
+        </view>
+        <text class="goal-line">目标 {{goal}} mL · {{percentText}}%</text>
+      </view>
+    </view>
+    <text class="remaining" wx:if="{{remaining > 0}}">还差 {{remaining}} mL，加把劲</text>
+    <text class="remaining done" wx:else>今日目标已达成，喝得不错 🎉</text>
+  </view>
+
+  <view class="card">
+    <view class="card-title">快速记录</view>
+    <view class="cups">
+      <view
+        class="cup-btn"
+        wx:for="{{cups}}"
+        wx:key="*this"
+        data-amount="{{item}}"
+        bindtap="onQuickTap"
+      >
+        <text class="cup-icon">🥤</text>
+        <text class="cup-amount">{{item}} mL</text>
+      </view>
+      <view class="cup-btn custom" bindtap="openCustom">
+        <text class="cup-icon">✏️</text>
+        <text class="cup-amount">自定义</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="row">
+      <text class="card-title" style="margin-bottom: 0;">今日记录</text>
+      <text class="muted">共 {{records.length}} 次</text>
+    </view>
+    <view class="empty" wx:if="{{records.length === 0}}">还没有记录，喝第一杯吧</view>
+    <view
+      class="record"
+      wx:for="{{records}}"
+      wx:key="id"
+      data-id="{{item.id}}"
+      bindlongpress="onDeleteRecord"
+    >
+      <text class="record-time">{{item.time}}</text>
+      <text class="record-amount">{{item.amount}} mL</text>
+      <text class="record-del" data-id="{{item.id}}" catchtap="onDeleteRecord">删除</text>
+    </view>
+    <text class="muted tips" wx:if="{{records.length > 0}}">长按记录也可以删除</text>
+  </view>
+</view>
+
+<view class="mask" wx:if="{{showCustom}}" bindtap="closeCustom"></view>
+<view class="dialog" wx:if="{{showCustom}}">
+  <view class="dialog-title">自定义水量</view>
+  <input
+    class="dialog-input"
+    type="number"
+    focus="{{showCustom}}"
+    placeholder="输入毫升数，如 400"
+    value="{{customValue}}"
+    bindinput="onCustomInput"
+    confirm-type="done"
+    bindconfirm="confirmCustom"
+  />
+  <view class="dialog-actions">
+    <view class="dialog-btn" bindtap="closeCustom">取消</view>
+    <view class="dialog-btn primary" bindtap="confirmCustom">记录</view>
+  </view>
+</view>

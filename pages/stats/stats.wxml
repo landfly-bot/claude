@@ -1,0 +1,63 @@
+<view class="page">
+  <view class="tabs">
+    <view
+      class="tab {{rangeIndex === index ? 'active' : ''}}"
+      wx:for="{{ranges}}"
+      wx:key="*this"
+      data-index="{{index}}"
+      bindtap="onRangeTap"
+    >最近 {{item}} 天</view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">饮水趋势</view>
+    <view class="chart">
+      <view class="goal-line" style="bottom: {{goalLine}}%;">
+        <text class="goal-tag">目标 {{goal}}</text>
+      </view>
+      <view class="bars">
+        <view
+          class="bar-item"
+          wx:for="{{days}}"
+          wx:key="date"
+          data-index="{{index}}"
+          bindtap="onBarTap"
+        >
+          <view class="bar-track">
+            <view
+              class="bar {{item.reached ? 'reached' : ''}} {{item.isToday ? 'today' : ''}}"
+              style="height: {{item.height}}%;"
+            ></view>
+          </view>
+          <text class="bar-label">{{item.shortLabel}}</text>
+        </view>
+      </view>
+    </view>
+    <text class="muted chart-tip">点击柱子查看当天饮水量</text>
+  </view>
+
+  <view class="card">
+    <view class="card-title">这段时间</view>
+    <view class="grid">
+      <view class="grid-item">
+        <text class="grid-value">{{total}}</text>
+        <text class="grid-label">总饮水量 (mL)</text>
+      </view>
+      <view class="grid-item">
+        <text class="grid-value">{{average}}</text>
+        <text class="grid-label">有记录日均 (mL)</text>
+      </view>
+      <view class="grid-item">
+        <text class="grid-value">{{reachedDays}}</text>
+        <text class="grid-label">达标天数</text>
+      </view>
+      <view class="grid-item">
+        <text class="grid-value">{{streak}}</text>
+        <text class="grid-label">连续达标 (天)</text>
+      </view>
+    </view>
+    <view class="best" wx:if="{{bestDay}}">
+      喝得最多的一天：{{bestDay.label}} · {{bestDay.total}} mL
+    </view>
+  </view>
+</view>
