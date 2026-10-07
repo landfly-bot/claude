@@ -69,7 +69,8 @@ function nextRemindText(settings) {
   const ts = nextRemindTs(settings)
   if (ts <= Date.now()) return '该喝水啦'
   const diff = Math.round((ts - Date.now()) / MINUTE)
-  return `下次提醒 ${dateUtil.formatTime(new Date(ts))}（约 ${diff} 分钟后）`
+  const clock = dateUtil.formatTime(new Date(ts))
+  return diff < 60 ? `下次提醒 ${clock}（约 ${diff} 分钟后）` : `下次提醒 ${clock}`
 }
 
 /** 弹出提醒；调用方负责判断 shouldRemind */

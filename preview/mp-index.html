@@ -1,0 +1,358 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>今日饮水</title>
+<style>
+*{box-sizing:border-box} html{background:#dfe5ee}
+body{margin:0}
+view,.v{display:block} text{display:inline}
+.phone{width:375px;height:812px;margin:0 auto;position:relative;overflow:hidden;background:#000;border-radius:0}
+.nav{height:88px;padding-top:44px;background:#2f80ed;color:#fff;text-align:center;font-size:17px;font-weight:600;line-height:44px;position:absolute;top:0;left:0;right:0;z-index:5}
+.status{position:absolute;top:0;left:0;right:0;height:44px;z-index:6;display:flex;justify-content:space-between;padding:14px 26px 0;color:#fff;font-size:14px;font-weight:600}
+.scroll{position:absolute;top:88px;bottom:56px;left:0;right:0;overflow-y:auto;
+  background:linear-gradient(180deg,#eef5ff 0%,#f7fbff 45%,#f7f8fa 100%);
+  --brand:#2f80ed;--brand-light:#56ccf2;--text:#1f2733;--text-weak:#8a94a6;--card:#fff;color:#1f2733;
+  font-family:-apple-system,"PingFang SC","Noto Sans CJK SC","Helvetica Neue",sans-serif}
+.tabbar{position:absolute;bottom:0;left:0;right:0;height:56px;background:#fff;border-top:1px solid #eee;display:flex;z-index:5}
+.tabbar div{flex:1;text-align:center;font-size:11px;color:#8a94a6;padding-top:8px}
+.tabbar div b{display:block;font-size:20px;line-height:24px;font-weight:400}
+.tabbar .on{color:#2f80ed}
+input.cup-input,.slider-fake{font-family:inherit}
+body {
+  --brand: #2f80ed;
+  --brand-light: #56ccf2;
+  --text: #1f2733;
+  --text-weak: #8a94a6;
+  --card: #ffffff;
+  background: linear-gradient(180deg, #eef5ff 0%, #f7fbff 45%, #f7f8fa 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  color: var(--text);
+  font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+}
+
+.page {
+  padding: 12px 14px 28px;
+  box-sizing: border-box;
+}
+
+.card {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 12px rgba(47, 128, 237, 0.06);
+}
+
+.card-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.muted {
+  color: var(--text-weak);
+  font-size: 12px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.empty {
+  text-align: center;
+  color: var(--text-weak);
+  font-size: 13px;
+  padding: 24px 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 4px 12px;
+}
+
+.date {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.weekday {
+  font-size: 13px;
+  color: var(--text-weak);
+  margin-left: 6px;
+}
+
+.next {
+  font-size: 12px;
+  color: var(--brand);
+  background: rgba(47, 128, 237, 0.1);
+  padding: 4px 9px;
+  border-radius: 499.5px;
+  max-width: 235px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* ---------- 水杯 ---------- */
+.cup-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 22px 0 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 12px rgba(47, 128, 237, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cup {
+  position: relative;
+  width: 170px;
+  height: 200px;
+  border: 4px solid rgba(47, 128, 237, 0.25);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 60px;
+  border-bottom-right-radius: 60px;
+  overflow: hidden;
+  background: rgba(47, 128, 237, 0.04);
+}
+
+.water {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(180deg, var(--brand-light) 0%, var(--brand) 100%);
+  transition: height 0.7s cubic-bezier(0.25, 0.8, 0.35, 1);
+}
+
+.wave {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 260px;
+  height: 260px;
+  margin-left: -130px;
+  margin-top: -12px;
+  background: rgba(86, 204, 242, 0.85);
+  border-radius: 43%;
+  animation: wave-spin 7s linear infinite;
+}
+
+.wave-2 {
+  background: rgba(47, 128, 237, 0.5);
+  border-radius: 47%;
+  margin-top: -8px;
+  animation: wave-spin 11s linear infinite reverse;
+}
+
+@keyframes wave-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.cup-info {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  z-index: 2;
+}
+
+.amount-line {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+}
+
+.amount {
+  font-size: 38px;
+  font-weight: 700;
+  color: var(--text);
+  text-shadow: 0 1px 4px rgba(255, 255, 255, 0.7);
+}
+
+.unit {
+  font-size: 14px;
+  margin-left: 4px;
+  color: var(--text);
+  text-shadow: 0 1px 4px rgba(255, 255, 255, 0.7);
+}
+
+.goal-line {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: #46536b;
+  text-shadow: 0 1px 4px rgba(255, 255, 255, 0.7);
+}
+
+.remaining {
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--text-weak);
+}
+
+.remaining.done {
+  color: var(--brand);
+}
+
+/* ---------- 快速记录 ---------- */
+.cups {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cup-btn {
+  width: calc((100% - 14px) / 3);
+  height: 65px;
+  margin: 0 7px 7px 0;
+  border-radius: 10px;
+  background: rgba(47, 128, 237, 0.07);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.cup-btn:nth-child(3n) {
+  margin-right: 0;
+}
+
+.cup-btn:active {
+  background: rgba(47, 128, 237, 0.18);
+}
+
+.cup-btn.custom {
+  background: rgba(138, 148, 166, 0.1);
+}
+
+.cup-icon {
+  font-size: 20px;
+}
+
+.cup-amount {
+  font-size: 12px;
+  margin-top: 5px;
+  color: var(--text);
+}
+
+/* ---------- 今日记录 ---------- */
+.record {
+  display: flex;
+  align-items: center;
+  padding: 11px 0;
+  border-top: 0.5px solid #f0f2f5;
+  font-size: 14px;
+}
+
+.record-time {
+  width: 60px;
+  color: var(--text-weak);
+  font-size: 13px;
+}
+
+.record-amount {
+  flex: 1;
+  font-weight: 500;
+}
+
+.record-del {
+  font-size: 12px;
+  color: #eb5757;
+  padding: 3px 8px;
+}
+
+.tips {
+  display: block;
+  margin-top: 8px;
+  text-align: center;
+}
+
+/* ---------- 自定义弹窗 ---------- */
+.mask {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 10;
+}
+
+.dialog {
+  position: fixed;
+  left: 30px;
+  right: 30px;
+  top: 34%;
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px 18px 10px;
+  z-index: 11;
+}
+
+.dialog-title {
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.dialog-input {
+  margin: 16px 0 12px;
+  height: 44px;
+  background: #f4f6f9;
+  border-radius: 8px;
+  padding: 0 12px;
+  font-size: 15px;
+}
+
+.dialog-actions {
+  display: flex;
+  border-top: 0.5px solid #f0f2f5;
+}
+
+.dialog-btn {
+  flex: 1;
+  text-align: center;
+  padding: 13px 0;
+  font-size: 15px;
+  color: var(--text-weak);
+}
+
+.dialog-btn.primary {
+  color: var(--brand);
+  font-weight: 600;
+}
+
+</style></head><body>
+<div class="phone"><div class="status"><span>9:41</span><span>5G ▮▮▮</span></div>
+<div class="nav">今日饮水</div>
+<div class="scroll"><div class="page">
+<view class="header"><view><text class="date">10月7日</text><text class="weekday">周三</text></view>
+<text class="next">下次提醒 15:20（约 42 分钟后）</text></view>
+<view class="cup-card"><view class="cup">
+ <view class="water" style="height:60%"><view class="wave"></view><view class="wave wave-2"></view></view>
+ <view class="cup-info"><view class="amount-line"><text class="amount">1200</text><text class="unit">mL</text></view>
+ <text class="goal-line">目标 2000 mL · 60%</text></view></view>
+ <text class="remaining">还差 800 mL，加把劲</text></view>
+<view class="card"><view class="card-title">快速记录</view><view class="cups">
+ <view class="cup-btn"><text class="cup-icon">🥤</text><text class="cup-amount">150 mL</text></view>
+ <view class="cup-btn"><text class="cup-icon">🥤</text><text class="cup-amount">250 mL</text></view>
+ <view class="cup-btn"><text class="cup-icon">🥤</text><text class="cup-amount">350 mL</text></view>
+ <view class="cup-btn"><text class="cup-icon">🥤</text><text class="cup-amount">500 mL</text></view>
+ <view class="cup-btn custom"><text class="cup-icon">✏️</text><text class="cup-amount">自定义</text></view></view></view>
+<view class="card"><view class="row"><text class="card-title" style="margin-bottom:0">今日记录</text><text class="muted">共 4 次</text></view>
+<view class="record"><text class="record-time">14:38</text><text class="record-amount">250 mL</text><text class="record-del">删除</text></view><view class="record"><text class="record-time">12:05</text><text class="record-amount">350 mL</text><text class="record-del">删除</text></view><view class="record"><text class="record-time">10:20</text><text class="record-amount">250 mL</text><text class="record-del">删除</text></view><view class="record"><text class="record-time">08:15</text><text class="record-amount">350 mL</text><text class="record-del">删除</text></view>
+<text class="muted tips">长按记录也可以删除</text></view>
+</div></div>
+<div class="tabbar"><div class="on"><b>💧</b>喝水</div><div class=""><b>📊</b>统计</div><div class=""><b>⚙️</b>设置</div></div></div></body></html>

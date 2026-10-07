@@ -12,25 +12,29 @@
   <view class="card">
     <view class="card-title">饮水趋势</view>
     <view class="chart">
-      <view class="goal-line" style="bottom: {{goalLine}}%;">
-        <text class="goal-tag">目标 {{goal}}</text>
-      </view>
-      <view class="bars">
-        <view
-          class="bar-item"
-          wx:for="{{days}}"
-          wx:key="date"
-          data-index="{{index}}"
-          bindtap="onBarTap"
-        >
-          <view class="bar-track">
-            <view
-              class="bar {{item.reached ? 'reached' : ''}} {{item.isToday ? 'today' : ''}}"
-              style="height: {{item.height}}%;"
-            ></view>
-          </view>
-          <text class="bar-label">{{item.shortLabel}}</text>
+      <view class="plot">
+        <view class="goal-line" style="bottom: {{goalLine}}%;">
+          <text class="goal-tag">目标 {{goal}}</text>
         </view>
+        <view class="bars">
+          <view
+            class="bar-item"
+            wx:for="{{days}}"
+            wx:key="date"
+            data-index="{{index}}"
+            bindtap="onBarTap"
+          >
+            <view class="bar-track">
+              <view
+                class="bar {{item.reached ? 'reached' : ''}} {{item.isToday ? 'today' : ''}}"
+                style="height: {{item.height}}%;"
+              ></view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="labels">
+        <text class="bar-label" wx:for="{{days}}" wx:key="date">{{item.shortLabel}}</text>
       </view>
     </view>
     <text class="muted chart-tip">点击柱子查看当天饮水量</text>

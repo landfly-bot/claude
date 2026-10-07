@@ -1,0 +1,223 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>饮水统计</title>
+<style>
+*{box-sizing:border-box} html{background:#dfe5ee}
+body{margin:0}
+view,.v{display:block} text{display:inline}
+.phone{width:375px;height:812px;margin:0 auto;position:relative;overflow:hidden;background:#000;border-radius:0}
+.nav{height:88px;padding-top:44px;background:#2f80ed;color:#fff;text-align:center;font-size:17px;font-weight:600;line-height:44px;position:absolute;top:0;left:0;right:0;z-index:5}
+.status{position:absolute;top:0;left:0;right:0;height:44px;z-index:6;display:flex;justify-content:space-between;padding:14px 26px 0;color:#fff;font-size:14px;font-weight:600}
+.scroll{position:absolute;top:88px;bottom:56px;left:0;right:0;overflow-y:auto;
+  background:linear-gradient(180deg,#eef5ff 0%,#f7fbff 45%,#f7f8fa 100%);
+  --brand:#2f80ed;--brand-light:#56ccf2;--text:#1f2733;--text-weak:#8a94a6;--card:#fff;color:#1f2733;
+  font-family:-apple-system,"PingFang SC","Noto Sans CJK SC","Helvetica Neue",sans-serif}
+.tabbar{position:absolute;bottom:0;left:0;right:0;height:56px;background:#fff;border-top:1px solid #eee;display:flex;z-index:5}
+.tabbar div{flex:1;text-align:center;font-size:11px;color:#8a94a6;padding-top:8px}
+.tabbar div b{display:block;font-size:20px;line-height:24px;font-weight:400}
+.tabbar .on{color:#2f80ed}
+input.cup-input,.slider-fake{font-family:inherit}
+body {
+  --brand: #2f80ed;
+  --brand-light: #56ccf2;
+  --text: #1f2733;
+  --text-weak: #8a94a6;
+  --card: #ffffff;
+  background: linear-gradient(180deg, #eef5ff 0%, #f7fbff 45%, #f7f8fa 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  color: var(--text);
+  font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+}
+
+.page {
+  padding: 12px 14px 28px;
+  box-sizing: border-box;
+}
+
+.card {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 12px rgba(47, 128, 237, 0.06);
+}
+
+.card-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.muted {
+  color: var(--text-weak);
+  font-size: 12px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.empty {
+  text-align: center;
+  color: var(--text-weak);
+  font-size: 13px;
+  padding: 24px 0;
+}
+
+.tabs {
+  display: flex;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 499.5px;
+  padding: 3px;
+  margin-bottom: 12px;
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  font-size: 13px;
+  padding: 8px 0;
+  border-radius: 499.5px;
+  color: var(--text-weak);
+}
+
+.tab.active {
+  background: var(--brand);
+  color: #fff;
+  font-weight: 500;
+}
+
+.chart {
+  position: relative;
+  padding-top: 18px;
+}
+
+/* 目标线和柱子共用这个绘图区，百分比基准一致 */
+.plot {
+  position: relative;
+  height: 120px;
+}
+
+.bars {
+  display: flex;
+  align-items: flex-end;
+  height: 100%;
+}
+
+.bar-item {
+  flex: 1;
+  height: 100%;
+}
+
+.bar-track {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.labels {
+  display: flex;
+  margin-top: 6px;
+}
+
+.bar {
+  width: 60%;
+  max-width: 14px;
+  min-width: 4px;
+  border-radius: 499.5px;
+  background: rgba(47, 128, 237, 0.28);
+  transition: height 0.4s ease;
+}
+
+.bar.reached {
+  background: linear-gradient(180deg, var(--brand-light) 0%, var(--brand) 100%);
+}
+
+.bar.today {
+  box-shadow: 0 0 0 1.5px rgba(47, 128, 237, 0.25);
+}
+
+.bar-label {
+  flex: 1;
+  text-align: center;
+  font-size: 10px;
+  color: var(--text-weak);
+  height: 14px;
+}
+
+.goal-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-top: 1px dashed rgba(47, 128, 237, 0.35);
+  z-index: 1;
+}
+
+.goal-tag {
+  position: absolute;
+  right: 0;
+  top: -15px;
+  font-size: 10px;
+  color: var(--brand);
+}
+
+.chart-tip {
+  display: block;
+  text-align: center;
+  margin-top: 12px;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.grid-item {
+  width: 50%;
+  padding: 10px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.grid-value {
+  font-size: 23px;
+  font-weight: 700;
+  color: var(--brand);
+}
+
+.grid-label {
+  font-size: 12px;
+  color: var(--text-weak);
+  margin-top: 4px;
+}
+
+.best {
+  margin-top: 8px;
+  padding-top: 10px;
+  border-top: 0.5px solid #f0f2f5;
+  font-size: 13px;
+  color: var(--text-weak);
+  text-align: center;
+}
+
+</style></head><body>
+<div class="phone"><div class="status"><span>9:41</span><span>5G ▮▮▮</span></div>
+<div class="nav">饮水统计</div>
+<div class="scroll"><div class="page">
+<view class="tabs"><view class="tab active">最近 7 天</view><view class="tab">最近 30 天</view></view>
+<view class="card"><view class="card-title">饮水趋势</view><view class="chart">
+<view class="plot"><view class="goal-line" style="bottom:91%"><text class="goal-tag">目标 2000</text></view>
+<view class="bars"><view class="bar-item"><view class="bar-track"><view class="bar  " style="height:68%"></view></view></view><view class="bar-item"><view class="bar-track"><view class="bar  " style="height:82%"></view></view></view><view class="bar-item"><view class="bar-track"><view class="bar reached " style="height:95%"></view></view></view><view class="bar-item"><view class="bar-track"><view class="bar  " style="height:75%"></view></view></view><view class="bar-item"><view class="bar-track"><view class="bar reached " style="height:100%"></view></view></view><view class="bar-item"><view class="bar-track"><view class="bar reached " style="height:93%"></view></view></view><view class="bar-item"><view class="bar-track"><view class="bar  today" style="height:55%"></view></view></view></view></view><view class="labels"><text class="bar-label">周四</text><text class="bar-label">周五</text><text class="bar-label">周六</text><text class="bar-label">周日</text><text class="bar-label">周一</text><text class="bar-label">周二</text><text class="bar-label">周三</text></view></view><text class="muted chart-tip">点击柱子查看当天饮水量</text></view>
+<view class="card"><view class="card-title">这段时间</view><view class="grid">
+<view class="grid-item"><text class="grid-value">11500</text><text class="grid-label">总饮水量 (mL)</text></view>
+<view class="grid-item"><text class="grid-value">1643</text><text class="grid-label">有记录日均 (mL)</text></view>
+<view class="grid-item"><text class="grid-value">3</text><text class="grid-label">达标天数</text></view>
+<view class="grid-item"><text class="grid-value">0</text><text class="grid-label">连续达标 (天)</text></view></view>
+<view class="best">喝得最多的一天：10月3日 · 2200 mL</view></view>
+</div></div>
+<div class="tabbar"><div class=""><b>💧</b>喝水</div><div class="on"><b>📊</b>统计</div><div class=""><b>⚙️</b>设置</div></div></div></body></html>

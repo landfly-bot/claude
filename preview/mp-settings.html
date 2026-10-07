@@ -1,0 +1,185 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>设置</title>
+<style>
+*{box-sizing:border-box} html{background:#dfe5ee}
+body{margin:0}
+view,.v{display:block} text{display:inline}
+.phone{width:375px;height:812px;margin:0 auto;position:relative;overflow:hidden;background:#000;border-radius:0}
+.nav{height:88px;padding-top:44px;background:#2f80ed;color:#fff;text-align:center;font-size:17px;font-weight:600;line-height:44px;position:absolute;top:0;left:0;right:0;z-index:5}
+.status{position:absolute;top:0;left:0;right:0;height:44px;z-index:6;display:flex;justify-content:space-between;padding:14px 26px 0;color:#fff;font-size:14px;font-weight:600}
+.scroll{position:absolute;top:88px;bottom:56px;left:0;right:0;overflow-y:auto;
+  background:linear-gradient(180deg,#eef5ff 0%,#f7fbff 45%,#f7f8fa 100%);
+  --brand:#2f80ed;--brand-light:#56ccf2;--text:#1f2733;--text-weak:#8a94a6;--card:#fff;color:#1f2733;
+  font-family:-apple-system,"PingFang SC","Noto Sans CJK SC","Helvetica Neue",sans-serif}
+.tabbar{position:absolute;bottom:0;left:0;right:0;height:56px;background:#fff;border-top:1px solid #eee;display:flex;z-index:5}
+.tabbar div{flex:1;text-align:center;font-size:11px;color:#8a94a6;padding-top:8px}
+.tabbar div b{display:block;font-size:20px;line-height:24px;font-weight:400}
+.tabbar .on{color:#2f80ed}
+input.cup-input,.slider-fake{font-family:inherit}
+body {
+  --brand: #2f80ed;
+  --brand-light: #56ccf2;
+  --text: #1f2733;
+  --text-weak: #8a94a6;
+  --card: #ffffff;
+  background: linear-gradient(180deg, #eef5ff 0%, #f7fbff 45%, #f7f8fa 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  color: var(--text);
+  font-family: -apple-system, "PingFang SC", "Helvetica Neue", sans-serif;
+}
+
+.page {
+  padding: 12px 14px 28px;
+  box-sizing: border-box;
+}
+
+.card {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 12px rgba(47, 128, 237, 0.06);
+}
+
+.card-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.muted {
+  color: var(--text-weak);
+  font-size: 12px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.empty {
+  text-align: center;
+  color: var(--text-weak);
+  font-size: 13px;
+  padding: 24px 0;
+}
+
+.value {
+  font-size: 14px;
+  color: var(--brand);
+}
+
+.slider {
+  margin: 12px 4px 4px;
+}
+
+.presets {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.preset {
+  flex: 1;
+  margin-right: 8px;
+  text-align: center;
+  font-size: 13px;
+  padding: 7px 0;
+  border-radius: 7px;
+  background: rgba(47, 128, 237, 0.08);
+  color: var(--brand);
+}
+
+.preset:last-child {
+  margin-right: 0;
+}
+
+.cup-inputs {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.cup-input {
+  flex: 1;
+  margin-right: 8px;
+  height: 42px;
+  line-height: 42px;
+  text-align: center;
+  background: #f4f6f9;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.cup-input:last-child {
+  margin-right: 0;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 48px;
+  border-bottom: 0.5px solid #f0f2f5;
+}
+
+.item.last {
+  border-bottom: none;
+}
+
+.item-label {
+  font-size: 15px;
+}
+
+.item-label.danger {
+  color: #eb5757;
+}
+
+.action {
+  margin: 12px 0 8px;
+  text-align: center;
+  background: var(--brand);
+  color: #fff;
+  font-size: 15px;
+  padding: 12px 0;
+  border-radius: 499.5px;
+}
+
+.action:active {
+  opacity: 0.85;
+}
+
+.footer {
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-weak);
+  padding: 10px 0 20px;
+}
+
+</style></head><body>
+<div class="phone"><div class="status"><span>9:41</span><span>5G ▮▮▮</span></div>
+<div class="nav">设置</div>
+<div class="scroll"><div class="page">
+<view class="card"><view class="row"><text class="card-title" style="margin-bottom:0">每日目标</text><text class="value">2000 mL</text></view>
+<div class="slider-fake" style="margin:14px 4px 6px;height:4px;background:#e5e5e5;border-radius:2px;position:relative"><div style="width:33%;height:4px;background:#2f80ed;border-radius:2px"></div><i style="position:absolute;left:33%;top:-9px;margin-left:-11px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.3)"></i></div>
+<view class="presets" style="margin-top:20px"><view class="preset">1500</view><view class="preset">2000</view><view class="preset">2500</view><view class="preset">3000</view></view>
+<text class="muted">一般建议每天 1500 - 2500 mL，运动量大或天气炎热可适当增加。</text></view>
+<view class="card"><view class="card-title">快捷杯量 (mL)</view><view class="cup-inputs">
+<div class="cup-input">150</div><div class="cup-input">250</div><div class="cup-input">350</div><div class="cup-input">500</div></view>
+<text class="muted">首页「快速记录」按钮的水量，修改后立即生效。</text></view>
+<view class="card"><view class="card-title">提醒</view>
+<view class="item"><text class="item-label">开启提醒</text><span style="display:inline-block;width:46px;height:26px;border-radius:13px;background:#2f80ed;position:relative"><i style="position:absolute;top:2px;left:22px;width:22px;height:22px;border-radius:50%;background:#fff"></i></span></view>
+<view class="item"><text class="item-label">开始时间</text><text class="value">08:00 ›</text></view>
+<view class="item"><text class="item-label">结束时间</text><text class="value">22:00 ›</text></view>
+<view class="item"><text class="item-label">提醒间隔</text><text class="value">60 分钟 ›</text></view>
+<view class="item"><text class="item-label">提醒时震动</text><span style="display:inline-block;width:46px;height:26px;border-radius:13px;background:#2f80ed;position:relative"><i style="position:absolute;top:2px;left:22px;width:22px;height:22px;border-radius:50%;background:#fff"></i></span></view>
+<view class="item last"><text class="item-label">下次提醒</text><text class="muted">下次提醒 15:20（约 42 分钟后）</text></view>
+<view class="action">开启微信推送提醒</view>
+<text class="muted">小程序退到后台后定时器会暂停，授权订阅消息后才能在关闭小程序时收到提醒。</text></view>
+<view class="card"><view class="card-title">数据</view>
+<view class="item"><text class="item-label">恢复默认设置</text><text class="value">›</text></view>
+<view class="item last"><text class="item-label danger">清空饮水记录</text><text class="value">›</text></view>
+<text class="muted">所有数据仅保存在本机，不会上传。</text></view>
+<view class="footer">喝水提醒 v1.0.0</view>
+</div></div>
+<div class="tabbar"><div class=""><b>💧</b>喝水</div><div class=""><b>📊</b>统计</div><div class="on"><b>⚙️</b>设置</div></div></div></body></html>

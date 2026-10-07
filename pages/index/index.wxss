@@ -22,7 +22,7 @@
   background: rgba(47, 128, 237, 0.1);
   padding: 8rpx 18rpx;
   border-radius: 999rpx;
-  max-width: 380rpx;
+  max-width: 470rpx;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -69,7 +69,7 @@
   width: 520rpx;
   height: 520rpx;
   margin-left: -260rpx;
-  margin-top: -505rpx;
+  margin-top: -24rpx;
   background: rgba(86, 204, 242, 0.85);
   border-radius: 43%;
   animation: wave-spin 7s linear infinite;
@@ -78,7 +78,7 @@
 .wave-2 {
   background: rgba(47, 128, 237, 0.5);
   border-radius: 47%;
-  margin-top: -500rpx;
+  margin-top: -16rpx;
   animation: wave-spin 11s linear infinite reverse;
 }
 
@@ -146,15 +146,19 @@
 }
 
 .cup-btn {
-  width: 152rpx;
+  width: calc((100% - 28rpx) / 3);
   height: 130rpx;
-  margin: 0 14rpx 16rpx 0;
+  margin: 0 14rpx 14rpx 0;
   border-radius: 20rpx;
   background: rgba(47, 128, 237, 0.07);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.cup-btn:nth-child(3n) {
+  margin-right: 0;
 }
 
 .cup-btn:active {

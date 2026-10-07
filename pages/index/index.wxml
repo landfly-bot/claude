@@ -9,7 +9,7 @@
 
   <view class="cup-card">
     <view class="cup">
-      <view class="water" style="height: {{percent}}%;">
+      <view class="water" wx:if="{{percent > 0}}" style="height: {{percent}}%;">
         <view class="wave"></view>
         <view class="wave wave-2"></view>
       </view>
